@@ -1,0 +1,28 @@
+.display {
+  font-family: 'Langar', sans-serif;
+  font-size: 1.5rem;
+  height: 100%;
+  width: 100%;
+  color: #dedded;
+  padding: 0.5rem;
+  text-align: right;
+  grid-area: display;
+  cursor: discard;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.result {
+  min-height: 45%;
+  width: 100%;
+  border-bottom: 1px dashed #f8cf7769;
+  color: #FFC300;
+  padding: 0.2rem;
+}
+
+.input {
+  min-height: 45%;
+  padding: 0.2rem;
+  width: 100%;
+}
