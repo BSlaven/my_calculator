@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Display from '../Display/Display';
 import classes from './Calculator.module.css';
 
@@ -30,15 +30,6 @@ const Calculator = () => {
     const shortDecimal = decimal.substr(0, 6);
     return parseFloat(`${int}.${shortDecimal}`);
  }
-  
-  useEffect(() => {
-    document.querySelector('.result').innerText = calcState.prevOperand;
-  }, [calcState.prevOperand]);
-  
-  useEffect(() => {
-    document.querySelector('.input').innerText = calcState.nextOperand === '' ?
-      '0' : calcState.nextOperand;
-  }, [calcState.nextOperand]);
   
   const operationClickHandler = event => {
     if(event.target.innerText === '-' && calcState.nextOperand === '') {
@@ -140,61 +131,61 @@ const Calculator = () => {
       <div 
         id="two" 
         onClick={inputValue} 
-        className="key two">2</div>
+        className={`${classes.key} ${classes.two}`}>2</div>
       <div 
         id="three" 
         onClick={inputValue} 
-        className="key three">3</div>
+        className={`${classes.key} ${classes.three}`}>3</div>
       <div 
         id="four" 
         onClick={inputValue} 
-        className="key four">4</div>
+        className={`${classes.key} ${classes.four}`}>4</div>
       <div 
         id="five" 
         onClick={inputValue} 
-        className="key five">5</div>
+        className={`${classes.key} ${classes.five}`}>5</div>
       <div 
         id="six" 
         onClick={inputValue} 
-        className="key six">6</div>
+        className={`${classes.key} ${classes.six}`}>6</div>
       <div 
         id="seven" 
         onClick={inputValue} 
-        className="key seven">7</div>
+        className={`${classes.key} ${classes.seven}`}>7</div>
       <div 
         id="eight" 
         onClick={inputValue} 
-        className="key eight">8</div>
+        className={`${classes.key} ${classes.eight}`}>8</div>
       <div 
         id="nine" 
         onClick={inputValue} 
-        className="key nine">9</div>
+        className={`${classes.key} ${classes.nine}`}>9</div>
       <div 
         id="equals" 
         onClick={equalClickHandler} 
-        className="key equals">=</div>
+        className={`${classes.key} ${classes.equals}`}>=</div>
       <div 
         id="add" 
         onClick={operationClickHandler} 
-        className="key add">+</div>
+        className={`${classes.key} ${classes.add}`}>+</div>
       <div 
         id="subtract" 
         onClick={operationClickHandler} 
-        className="key subtract">-</div>
+        className={`${classes.key} ${classes.subtract}`}>-</div>
       <div 
         id="multiply" 
         onClick={operationClickHandler} 
-        className="key multiply">*</div>
+        className={`${classes.key} ${classes.multiply}`}>*</div>
       <div 
         id="divide" 
         onClick={operationClickHandler} 
-        className="key divide">/</div>
+        className={`${classes.key} ${classes.divide}`}>/</div>
       <div 
         id="decimal" 
         onClick={inputDecimalValue} 
-        className="key decimal">.</div>
+        className={`${classes.key} ${classes.decimal}`}>.</div>
     </div>
   )
 }
 
-export default Calculator
+export default Calculator;
