@@ -56,7 +56,7 @@ const Calculator = () => {
         prevOperand: prevState.nextOperand,
         operation: event.target.innerText,
         nextOperand: ''
-      }))           
+      }))
     } else if(calcState.nextOperand && calcState.operation) {
       setCalcState(({      
         prevOperand: calculateValues(calcState.operation),
