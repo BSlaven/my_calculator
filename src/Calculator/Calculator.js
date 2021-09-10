@@ -32,35 +32,36 @@ const Calculator = () => {
  }
   
   const operationClickHandler = event => {
-    if(event.target.innerText === '-' && calcState.nextOperand === '') {
+    const eventText = event.target.innerText; 
+    if(eventText === '-' && calcState.nextOperand === '') {
       if(calcState.operation === undefined) {
         setCalcState(prevState => ({
           ...prevState,
-          operation: event.target.innerText
+          operation: eventText
         }))
         return
       }
       if(calcState.nextOperand.split('').includes('-')) return;
       setCalcState(prevState => ({
         ...prevState,
-        nextOperand: prevState.nextOperand += event.target.innerText
+        nextOperand: prevState.nextOperand += eventText
       }))
       return
     }
     if(calcState.nextOperand === '-') return;
     
     if(calcState.nextOperand === '') {
-      setCalcState((prevState) => ({ ...prevState, operation: event.target.innerText }));
+      setCalcState((prevState) => ({ ...prevState, operation: eventText }));
     } else if(calcState.nextOperand !== '' && calcState.operation === undefined) {
       setCalcState((prevState) => ({
         prevOperand: prevState.nextOperand,
-        operation: event.target.innerText,
+        operation: eventText,
         nextOperand: ''
       }))
     } else if(calcState.nextOperand && calcState.operation) {
       setCalcState(({      
         prevOperand: calculateValues(calcState.operation),
-        operation: event.target.innerText,
+        operation: eventText,
         nextOperand: ''
       }));
     }
