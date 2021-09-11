@@ -1,11 +1,17 @@
 import { useEffect, useRef } from 'react';
 import classes from './Display.module.css';
 
-const Display = ({ prevOperand, nextOperand }) => {
+const Display = ({ prevOperand, nextOperand, operation }) => {
 
   const calcDisplay = useRef();
   const calcInput = useRef();
-
+  
+  useEffect(() => {
+    if(!operation) return;
+    console.log(operation);
+    
+  }, [operation]);
+  
   useEffect(() => {
     calcDisplay.current.innerText = prevOperand;
   }, [prevOperand]);
@@ -13,7 +19,7 @@ const Display = ({ prevOperand, nextOperand }) => {
   useEffect(() => {
     calcInput.current.innerText = nextOperand === '' ?
       '0' : nextOperand;
-  }, [nextOperand]);  
+  }, [nextOperand]);
   
   return (
     <div className={classes.display}>

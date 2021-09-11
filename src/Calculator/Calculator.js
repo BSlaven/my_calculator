@@ -11,25 +11,26 @@ const Calculator = () => {
   
   const calculateValues = operation => {
     let outputResult;
+    const { prevOperand: prev, nextOperand: next } = calcState;
     switch(operation) {
-      case '+':
-        outputResult = parseFloat(calcState.prevOperand) + parseFloat(calcState.nextOperand);
-        break;
       case '-':
-        outputResult = parseFloat(calcState.prevOperand) - parseFloat(calcState.nextOperand);
+        outputResult = parseFloat(prev) - parseFloat(next);
         break; 
       case '*':
-        outputResult = parseFloat(calcState.prevOperand) * parseFloat(calcState.nextOperand);
+        outputResult = parseFloat(prev) * parseFloat(next);
         break;
       case '/':
-        outputResult = parseFloat(calcState.prevOperand) / parseFloat(calcState.nextOperand);
+        outputResult = parseFloat(prev) / parseFloat(next);
+        break;
+      default:
+        outputResult = parseFloat(prev) + parseFloat(next);
         break;
     }
     if(Number.isInteger(outputResult)) return outputResult;
     const [int, decimal] = String(outputResult).split('.');
     const shortDecimal = decimal.substr(0, 6);
     return parseFloat(`${int}.${shortDecimal}`);
- }
+  }
   
   const operationClickHandler = event => {
     const eventText = event.target.innerText; 
@@ -41,13 +42,14 @@ const Calculator = () => {
         }))
         return
       }
-      if(calcState.nextOperand.split('').includes('-')) return;
+      if(calcState.nextOperand.includes('-')) return;
       setCalcState(prevState => ({
         ...prevState,
         nextOperand: prevState.nextOperand += eventText
       }))
       return
     }
+
     if(calcState.nextOperand === '-') return;
     
     if(calcState.nextOperand === '') {
@@ -114,9 +116,11 @@ const Calculator = () => {
   
   return (
     <div className={classes.calculator}>
-      <Display 
+      <Display
         prevOperand={calcState.prevOperand} 
-        nextOperand={calcState.nextOperand} />
+        nextOperand={calcState.nextOperand}
+        operation={calcState.operation}
+      />
       <div 
         id="clear" 
         onClick={clearValues} 
