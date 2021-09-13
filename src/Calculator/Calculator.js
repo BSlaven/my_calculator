@@ -26,10 +26,7 @@ const Calculator = () => {
         outputResult = parseFloat(prev) + parseFloat(next);
         break;
     }
-    if(Number.isInteger(outputResult)) return outputResult;
-    const [int, decimal] = String(outputResult).split('.');
-    const shortDecimal = decimal.substr(0, 6);
-    return parseFloat(`${int}.${shortDecimal}`);
+    return outputResult;
   }
   
   const operationClickHandler = event => {
@@ -44,6 +41,7 @@ const Calculator = () => {
     }
 
     if(copyState.nextOperand === '-') return;
+    if(copyState.operation === eventText) return;
 
     if(!copyState.operation) {
       copyState.operation = eventText;
