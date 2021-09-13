@@ -34,39 +34,32 @@ const Calculator = () => {
   
   const operationClickHandler = event => {
     const eventText = event.target.innerText; 
-    if(eventText === '-' && calcState.nextOperand === '') {
-      if(calcState.operation === undefined) {
-        setCalcState(prevState => ({
-          ...prevState,
-          operation: eventText
-        }))
-        return
-      }
-      if(calcState.nextOperand.includes('-')) return;
-      setCalcState(prevState => ({
-        ...prevState,
-        nextOperand: prevState.nextOperand += eventText
-      }))
-      return
+    const copyState = { ...calcState }
+    if(eventText === '-' && copyState.nextOperand.includes('-') && copyState.operation === ('-')) return;
+
+    if(eventText === '-' && calcState.operation === '-' && !calcState.nextOperand) {
+      copyState.nextOperand += eventText;
+      setCalcState(copyState);
+      return;
     }
 
-    if(calcState.nextOperand === '-') return;
-    
-    if(calcState.nextOperand === '') {
-      setCalcState((prevState) => ({ ...prevState, operation: eventText }));
-    } else if(calcState.nextOperand !== '' && calcState.operation === undefined) {
-      setCalcState((prevState) => ({
-        prevOperand: prevState.nextOperand,
-        operation: eventText,
-        nextOperand: ''
-      }))
-    } else if(calcState.nextOperand && calcState.operation) {
-      setCalcState(({      
-        prevOperand: calculateValues(calcState.operation),
-        operation: eventText,
-        nextOperand: ''
-      }));
+    if(copyState.nextOperand === '-') return;
+
+    if(!copyState.operation) {
+      copyState.operation = eventText;
+      
+      if(copyState.nextOperand.length > 1) {
+        copyState.prevOperand = copyState.nextOperand;
+        copyState.nextOperand = '';
+      }
+      setCalcState(copyState);
+      return;
     }
+
+    copyState.prevOperand = calculateValues(calcState.operation)
+    copyState.operation = eventText;
+    copyState.nextOperand = ''
+    setCalcState(copyState);
   }
   
   const equalClickHandler = () => {
