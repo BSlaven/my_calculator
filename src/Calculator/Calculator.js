@@ -41,23 +41,23 @@ const Calculator = () => {
     }
 
     if(copyState.nextOperand === '-') return;
-    if(copyState.operation === eventText) return;
+    if(copyState.operation === eventText && !copyState.nextOperand.length > 1) return;
 
-    if(!copyState.operation) {
+    if(!copyState.operation && copyState.nextOperand.length > 1) {
       copyState.operation = eventText;
-      
-      if(copyState.nextOperand.length > 1) {
-        copyState.prevOperand = copyState.nextOperand;
-        copyState.nextOperand = '';
-      }
+      copyState.prevOperand = copyState.nextOperand;
+      copyState.nextOperand = '';
       setCalcState(copyState);
-      return;
+    } else if(copyState.operation && copyState.nextOperand) {
+      copyState.prevOperand = calculateValues(calcState.operation)
+      copyState.operation = eventText;
+      copyState.nextOperand = ''
+      setCalcState(copyState);
+    } else {
+      copyState.operation = eventText;
+      copyState.nextOperand = '';
+      setCalcState(copyState);
     }
-
-    copyState.prevOperand = calculateValues(calcState.operation)
-    copyState.operation = eventText;
-    copyState.nextOperand = ''
-    setCalcState(copyState);
   }
   
   const equalClickHandler = () => {
