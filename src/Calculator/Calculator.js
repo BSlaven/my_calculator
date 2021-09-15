@@ -91,18 +91,15 @@ const Calculator = () => {
   }
   
   const inputDecimalValue = e => {
-    if(/\./.test(calcState.nextOperand)) return;
-    if(!calcState.nextOperand) {
-      setCalcState(prevState => ({
-        ...prevState,
-        nextOperand: '0.'      
-      }))      
+    const copyState = { ...calcState };
+    if(/\./.test(copyState.nextOperand)) return;
+
+    if(copyState.nextOperand.length <= 1) {
+      copyState.nextOperand += '0.';
     } else {
-      setCalcState(prevState => ({
-        ...prevState,
-        nextOperand: prevState.nextOperand += e.target.innerText      
-      }))
+      copyState.nextOperand += '.';
     }
+    setCalcState(copyState);
   }
   
   return (
