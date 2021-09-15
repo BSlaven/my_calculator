@@ -6,7 +6,7 @@ const Calculator = () => {
   const [calcState, setCalcState] = useState({
     prevOperand: 0,
     nextOperand: '',
-    operation: undefined
+    operation: null
   });
   
   const calculateValues = operation => {
@@ -61,10 +61,10 @@ const Calculator = () => {
   }
   
   const equalClickHandler = () => {
-    if(calcState.operation === undefined || calcState.nextOperand === '') return;
+    if(!calcState.operation || !calcState.nextOperand) return;
     setCalcState({
       prevOperand: calculateValues(calcState.operation),
-      operation: undefined,
+      operation: null,
       nextOperand: ''
     })
   }
@@ -72,7 +72,7 @@ const Calculator = () => {
   const clearValues = () => {
     setCalcState({ 
       prevOperand: 0,
-      operation: undefined,
+      operation: null,
       nextOperand: ''
     });
   }
@@ -83,7 +83,7 @@ const Calculator = () => {
   }
   
   const inputZeroValue = e => {
-    if(calcState.nextOperand === '') return;
+    if(!calcState.nextOperand) return;
     setCalcState({ 
       ...calcState,
       nextOperand: calcState.nextOperand += e.target.innerText 
@@ -92,7 +92,7 @@ const Calculator = () => {
   
   const inputDecimalValue = e => {
     if(/\./.test(calcState.nextOperand)) return;
-    if(calcState.nextOperand === '') {
+    if(!calcState.nextOperand) {
       setCalcState(prevState => ({
         ...prevState,
         nextOperand: '0.'      
