@@ -43,7 +43,7 @@ const Calculator = () => {
     if(copyState.nextOperand === '-') return;
     if(copyState.operation === eventText && !copyState.nextOperand.length > 1) return;
 
-    if(!copyState.operation && copyState.nextOperand.length > 1) {
+    if(!copyState.operation && copyState.nextOperand) {
       copyState.operation = eventText;
       copyState.prevOperand = copyState.nextOperand;
       copyState.nextOperand = '';
@@ -61,40 +61,41 @@ const Calculator = () => {
   }
   
   const equalClickHandler = () => {
-    if(!calcState.operation || !calcState.nextOperand) return;
-    setCalcState({
-      prevOperand: calculateValues(calcState.operation),
-      operation: null,
-      nextOperand: ''
-    })
+    const copyState = { ...calcState };
+    if(!copyState.operation || !copyState.nextOperand) return;
+    copyState.prevOperand = calculateValues(copyState.operation);
+    copyState.operation = null;
+    copyState.nextOperand = '';
+    setCalcState(copyState);
   }
   
   const clearValues = () => {
-    setCalcState({ 
-      prevOperand: 0,
-      operation: null,
-      nextOperand: ''
-    });
+    const copyState = { ...calcState };
+    copyState.prevOperand = 0;
+    copyState.operation = null;
+    copyState.nextOperand = '';
+    setCalcState(copyState);
   }
   
   const inputValue = e => { 
+    const copyState = { ...calcState };
     const value = e.target.innerText;
-    setCalcState({ ...calcState, nextOperand: calcState.nextOperand += value });
+    copyState.nextOperand += value;
+    setCalcState(copyState);
   }
   
-  const inputZeroValue = e => {
-    if(!calcState.nextOperand) return;
-    setCalcState({ 
-      ...calcState,
-      nextOperand: calcState.nextOperand += e.target.innerText 
-    });
+  const inputZeroValue = () => {
+    const copyState = { ...calcState };
+    if(copyState.nextOperand === '0') return;
+    copyState.nextOperand += '0';
+    setCalcState(copyState);
   }
   
-  const inputDecimalValue = e => {
+  const inputDecimalValue = () => {
     const copyState = { ...calcState };
     if(/\./.test(copyState.nextOperand)) return;
 
-    if(copyState.nextOperand.length <= 1) {
+    if(!copyState.nextOperand || copyState.nextOperand === '-') {
       copyState.nextOperand += '0.';
     } else {
       copyState.nextOperand += '.';
