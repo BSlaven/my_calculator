@@ -6,12 +6,6 @@ const Display = ({ prevOperand, nextOperand, operation }) => {
   const calcDisplay = useRef();
   const calcInput = useRef();
   
-  // useEffect(() => {
-  //   if(!operation) return;
-  //   console.log(operation);
-    
-  // }, [operation]);
-  
   useEffect(() => {
     calcDisplay.current.innerText = prevOperand;
   }, [prevOperand]);
