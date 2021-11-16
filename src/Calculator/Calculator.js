@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Display from '../Display/Display';
 import classes from './Calculator.module.css';
 
@@ -8,6 +8,19 @@ const Calculator = () => {
     nextOperand: '',
     operation: null
   });
+
+  const keyboardInputHandler = e => {
+    const copyState = { ...calcState };
+    const inputValue = e.key;
+    copyState.nextOperand += inputValue;
+    setCalcState(copyState);
+  }
+  
+  useEffect(() => {
+    window.addEventListener('keyup', (e) => keyboardInputHandler(e));
+    
+    return window.removeEventListener('keyup', keyboardInputHandler);
+  }, [keyboardInputHandler]);
   
   const calculateValues = operation => {
     let outputResult;
