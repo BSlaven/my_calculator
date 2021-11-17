@@ -10,8 +10,11 @@ const Calculator = () => {
   });
 
   const keyboardInputHandler = e => {
-    const copyState = { ...calcState };
     const inputValue = e.key;
+    console.log(`Your keypress value is: ${inputValue}`);
+    const inputAsNumber = parseInt(inputValue);
+    if(!inputAsNumber) return;
+    const copyState = { ...calcState };
     copyState.nextOperand += inputValue;
     setCalcState(copyState);
   }
