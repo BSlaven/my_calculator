@@ -15,12 +15,11 @@ const Calculator = () => {
     copyState.nextOperand += inputValue;
     setCalcState(copyState);
   }
-  
+
   useEffect(() => {
-    window.addEventListener('keyup', (e) => keyboardInputHandler(e));
-    
-    return window.removeEventListener('keyup', keyboardInputHandler);
-  }, [keyboardInputHandler]);
+    document.addEventListener('keyup', keyboardInputHandler);
+    return document.removeEventListener('keyup', keyboardInputHandler);
+  }, [])
   
   const calculateValues = operation => {
     let outputResult;
@@ -117,7 +116,10 @@ const Calculator = () => {
   }
   
   return (
-    <div className={classes.calculator}>
+    <div
+      tabIndex="0"
+      className={classes.calculator}
+      onKeyUp={keyboardInputHandler}>
       <Display
         prevOperand={calcState.prevOperand} 
         nextOperand={calcState.nextOperand}
