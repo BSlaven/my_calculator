@@ -9,8 +9,20 @@ const Calculator = () => {
     operation: null
   });
 
+  const equalClickHandler = () => {
+    const copyState = { ...calcState };
+    if(!copyState.operation || !copyState.nextOperand) return;
+    copyState.prevOperand = calculateValues(copyState.operation);
+    copyState.operation = null;
+    copyState.nextOperand = '';
+    setCalcState(copyState);
+  }
+
   const keyboardInputHandler = e => {
     const inputValue = e.key;
+    if(inputValue === 'Enter') {
+      equalClickHandler();
+    }
     console.log(`Your keypress value is: ${inputValue}`);
     const inputAsNumber = parseInt(inputValue);
     if(!inputAsNumber) return;
@@ -73,15 +85,6 @@ const Calculator = () => {
       copyState.nextOperand = '';
       setCalcState(copyState);
     }
-  }
-  
-  const equalClickHandler = () => {
-    const copyState = { ...calcState };
-    if(!copyState.operation || !copyState.nextOperand) return;
-    copyState.prevOperand = calculateValues(copyState.operation);
-    copyState.operation = null;
-    copyState.nextOperand = '';
-    setCalcState(copyState);
   }
   
   const clearValues = () => {
