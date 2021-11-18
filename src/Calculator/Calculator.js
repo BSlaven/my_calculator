@@ -34,7 +34,7 @@ const Calculator = () => {
   useEffect(() => {
     window.addEventListener('keyup', keyboardInputHandler);
     return () => window.removeEventListener('keyup', keyboardInputHandler);
-  }, [keyboardInputHandler])
+  })
   
   const calculateValues = operation => {
     let outputResult;
