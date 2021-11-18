@@ -32,9 +32,9 @@ const Calculator = () => {
   }
 
   useEffect(() => {
-    document.addEventListener('keyup', keyboardInputHandler);
-    return () => document.removeEventListener('keyup', keyboardInputHandler);
-  }, [keyboardInputHandler])
+    window.addEventListener('keyup', keyboardInputHandler);
+    return () => window.removeEventListener('keyup', keyboardInputHandler);
+  }, [])
   
   const calculateValues = operation => {
     let outputResult;
