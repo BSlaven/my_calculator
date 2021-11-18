@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Display from '../Display/Display';
 import classes from './Calculator.module.css';
 
@@ -8,6 +8,33 @@ const Calculator = () => {
     nextOperand: '',
     operation: null
   });
+
+  const equalClickHandler = () => {
+    const copyState = { ...calcState };
+    if(!copyState.operation || !copyState.nextOperand) return;
+    copyState.prevOperand = calculateValues(copyState.operation);
+    copyState.operation = null;
+    copyState.nextOperand = '';
+    setCalcState(copyState);
+  }
+
+  const keyboardInputHandler = e => {
+    const inputValue = e.key;
+    if(inputValue === 'Enter') {
+      equalClickHandler();
+    }
+    console.log(`Your keypress value is: ${inputValue}`);
+    const inputAsNumber = parseInt(inputValue);
+    if(!inputAsNumber) return;
+    const copyState = { ...calcState };
+    copyState.nextOperand += inputValue;
+    setCalcState(copyState);
+  }
+
+  useEffect(() => {
+    document.addEventListener('keyup', keyboardInputHandler);
+    return document.removeEventListener('keyup', keyboardInputHandler);
+  }, [])
   
   const calculateValues = operation => {
     let outputResult;
@@ -60,15 +87,6 @@ const Calculator = () => {
     }
   }
   
-  const equalClickHandler = () => {
-    const copyState = { ...calcState };
-    if(!copyState.operation || !copyState.nextOperand) return;
-    copyState.prevOperand = calculateValues(copyState.operation);
-    copyState.operation = null;
-    copyState.nextOperand = '';
-    setCalcState(copyState);
-  }
-  
   const clearValues = () => {
     const copyState = { ...calcState };
     copyState.prevOperand = 0;
@@ -104,7 +122,10 @@ const Calculator = () => {
   }
   
   return (
-    <div className={classes.calculator}>
+    <div
+      tabIndex="0"
+      className={classes.calculator}
+      onKeyUp={keyboardInputHandler}>
       <Display
         prevOperand={calcState.prevOperand} 
         nextOperand={calcState.nextOperand}
