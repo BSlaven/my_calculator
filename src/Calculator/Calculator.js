@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import Display from '../Display/Display';
 import classes from './Calculator.module.css';
 
@@ -46,8 +46,8 @@ const Calculator = () => {
   }
 
   useEffect(() => {
-    window.addEventListener('keyup', keyboardInputHandler);
-    return () => window.removeEventListener('keyup', keyboardInputHandler);
+    document.addEventListener('keyup', keyboardInputHandler);
+    return () => document.removeEventListener('keyup', keyboardInputHandler);
   });
   
   const calculateValues = operation => {
@@ -71,7 +71,7 @@ const Calculator = () => {
   }
   
   const operationClickHandler = event => {
-    const eventText = event.target.innerText || event.key; 
+    const eventText = event.key || event.target.innerText;
     const copyState = { ...calcState }
     if(eventText === '-' && copyState.nextOperand.includes('-') && copyState.operation === ('-')) return;
 
@@ -138,8 +138,7 @@ const Calculator = () => {
   return (
     <div
       tabIndex="0"
-      className={classes.calculator}
-      onKeyUp={keyboardInputHandler}>
+      className={classes.calculator}>
       <Display
         prevOperand={calcState.prevOperand} 
         nextOperand={calcState.nextOperand}
