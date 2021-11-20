@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Display from '../Display/Display';
 import classes from './Calculator.module.css';
 
@@ -21,8 +21,13 @@ const Calculator = () => {
   const keyboardInputHandler = e => {
     const inputValue = e.key;
     if(inputValue === 'Enter') {
-      equalClickHandler();
+      return equalClickHandler();
     }
+
+    if(inputValue === '+' || inputValue === '-' || inputValue === '*' || inputValue === '/') {
+      operationClickHandler(e);
+    }
+
     console.log(`Your keypress value is: ${inputValue}`);
     const inputAsNumber = parseInt(inputValue);
     if(!inputAsNumber) return;
@@ -34,7 +39,7 @@ const Calculator = () => {
   useEffect(() => {
     window.addEventListener('keyup', keyboardInputHandler);
     return () => window.removeEventListener('keyup', keyboardInputHandler);
-  }, [keyboardInputHandler]);
+  });
   
   const calculateValues = operation => {
     let outputResult;
@@ -57,7 +62,7 @@ const Calculator = () => {
   }
   
   const operationClickHandler = event => {
-    const eventText = event.target.innerText; 
+    const eventText = event.target.innerText || event.key; 
     const copyState = { ...calcState }
     if(eventText === '-' && copyState.nextOperand.includes('-') && copyState.operation === ('-')) return;
 
