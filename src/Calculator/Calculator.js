@@ -19,13 +19,22 @@ const Calculator = () => {
   }
 
   const keyboardInputHandler = e => {
+    e.stopPropagation();
     const inputValue = e.key;
     if(inputValue === 'Enter') {
       return equalClickHandler();
     }
 
-    if(inputValue === '+' || inputValue === '-' || inputValue === '*' || inputValue === '/') {
-      operationClickHandler(e);
+    if(inputValue === '-') {
+      const copyState = { ...calcState };
+      copyState.prevOperand = copyState.nextOperand;
+      copyState.operation = '-';
+      copyState.nextOperand = '';
+      setCalcState(copyState);
+    }
+
+    if(inputValue === '+' || inputValue === '*' || inputValue === '/') {
+      return operationClickHandler(e);
     }
 
     console.log(`Your keypress value is: ${inputValue}`);
