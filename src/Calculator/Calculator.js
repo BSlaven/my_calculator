@@ -25,15 +25,7 @@ const Calculator = () => {
       return equalClickHandler();
     }
 
-    if(inputValue === '-') {
-      const copyState = { ...calcState };
-      copyState.prevOperand = copyState.nextOperand;
-      copyState.operation = '-';
-      copyState.nextOperand = '';
-      setCalcState(copyState);
-    }
-
-    if(inputValue === '+' || inputValue === '*' || inputValue === '/') {
+    if(inputValue === '+' || inputValue === '-' || inputValue === '*' || inputValue === '/') {
       return operationClickHandler(e);
     }
 
