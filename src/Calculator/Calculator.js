@@ -31,7 +31,7 @@ const Calculator = () => {
 
     console.log(`Your keypress value is: ${inputValue}`);
     const inputAsNumber = parseInt(inputValue);
-    if(!inputAsNumber) return;
+    if(!inputAsNumber && inputAsNumber !== 0) return;
     const copyState = { ...calcState };
     copyState.nextOperand += inputValue;
     setCalcState(copyState);
