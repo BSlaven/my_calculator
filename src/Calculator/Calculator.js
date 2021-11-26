@@ -29,6 +29,10 @@ const Calculator = () => {
       return operationClickHandler(e);
     }
 
+    if(inputValue === '.' || inputValue === ',') {
+      return inputDecimalValue();
+    }
+
     console.log(`Your keypress value is: ${inputValue}`);
     const inputAsNumber = parseInt(inputValue);
     if(!inputAsNumber && inputAsNumber !== 0) return;
