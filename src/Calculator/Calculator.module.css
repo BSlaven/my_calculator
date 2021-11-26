@@ -1,10 +1,9 @@
 .calculator {
   background-color: #1e0041;
   padding: 0.3rem;
-  width: 40vw;
-  max-width: 400px;
-  height: 70vh;
-  min-height: 500px;
+  width: 90%;
+  max-width: 350px;
+  min-height: 400px;
   border-radius: 4px;
   display: grid;
   place-items: center;
