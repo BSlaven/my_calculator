@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Display from '../Display/Display';
 import classes from './Calculator.module.css';
 
@@ -33,7 +33,6 @@ const Calculator = () => {
       return inputDecimalValue();
     }
 
-    console.log(`Your keypress value is: ${inputValue}`);
     const inputAsNumber = parseInt(inputValue);
     if(!inputAsNumber && inputAsNumber !== 0) return;
     const copyState = { ...calcState };
@@ -63,7 +62,7 @@ const Calculator = () => {
         outputResult = parseFloat(prev) + parseFloat(next);
         break;
     }
-    return outputResult;
+    return outputResult.toFixed(4);
   }
   
   const operationClickHandler = event => {
