@@ -63,7 +63,7 @@ const Calculator = () => {
         outputResult = parseFloat(prev) + parseFloat(next);
         break;
     }
-    return outputResult;
+    return outputResult.toFixed(4);
   }
   
   const operationClickHandler = event => {
