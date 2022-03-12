@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Display from '../Display/Display';
 import classes from './Calculator.module.css';
 
